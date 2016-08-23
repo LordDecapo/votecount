@@ -1,0 +1,1 @@
+{"Decapo": 5, "Magic": 0, "John": 7, "Tuchi": 3, "Dylan": 1}
