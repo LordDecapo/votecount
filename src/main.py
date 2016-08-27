@@ -20,10 +20,11 @@ res = {}
 for i in config:
     tok = i.strip('\n')
     res[tok] = 0
+print(res)
 
 for i in source:
     tok = i.strip('\n').split()
-    res[tok[0]] = res[tok[0]] + int(tok[1])
+    res[tok[0]] += int(tok[1])
 
 #x = ' '
 #results.write(str(x.join(res)))
