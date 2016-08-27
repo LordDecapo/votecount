@@ -1,35 +1,27 @@
-import json
+import operator
 import argparse
 
-parser = argparse.ArgumentParser(description='An assembler for the Minora CPU\
-        \ emulator')
-parser.add_argument('Candidates', metavar='Candidates',  type=str,
-        help='text file containing a list of Candidates.')
+parser = argparse.ArgumentParser(description='Vote counter for ORE Election')
 parser.add_argument('Votes', metavar='Votes', type=str,
         help="Copy Paste file of all votes")
 
 args = parser.parse_args()
-cand = args.Candidates
 vote = args.Votes
-
-config = open(cand, 'r')
-source = open(vote, 'r')
+votes = open(vote, 'r')
 results = open('results.txt', 'w+')
 res = {}
 
-for i in config:
-    tok = i.strip('\n')
-    res[tok] = 0
-print(res)
+for i in votes.readlines():
+    v = i.strip('\n').split()
+    if v[0] not in res.keys():
+        res[v[0]] = int(v[1])
+    res[v[0]] += int(v[1])
 
-for i in source:
-    tok = i.strip('\n').split()
-    res[tok[0]] += int(tok[1])
+res = sorted(res.items(), key=operator.itemgetter(1))
+res.reverse()
+    
+for x in res:
+    results.write(x[0]+ " : "+str(x[1])+"\n")
 
-#x = ' '
-#results.write(str(x.join(res)))
-json.dump(res, results)
-
-source.close()
-config.close()
+votes.close()
 results.close()
